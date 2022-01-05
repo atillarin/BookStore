@@ -39,8 +39,16 @@ namespace WebApi.Controllers {
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            GetBookQuery query = new GetBookQuery(_context);
-            var result = query.Handle(id);
+            BookModelView result;          
+            try
+            {
+                GetBookQuery query = new GetBookQuery(_context);
+                result = query.Handle(id);
+            }
+            catch (Exception ex)
+            {             
+                return BadRequest(ex.Message);
+            }          
             return Ok(result);
         }
 

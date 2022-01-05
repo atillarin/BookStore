@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using WebApi.Common;
 using WebApi.DBOperations;
@@ -16,7 +17,9 @@ namespace WebApi.BookOperations.GetBooks
         public BookModelView Handle(int id)
         {
             var book = _dbContext.Books.Where(book=>book.Id == id).SingleOrDefault();
-            
+            if(book is null)
+                throw new InvalidOperationException("Kitap Bulunamadi!");
+
             BookModelView Model = new BookModelView();
             Model.Title = book.Title;
             Model.PageCount = book.PageCount;
