@@ -8,15 +8,15 @@ namespace WebApi.BookOperations.GetBooks
     public class GetBookQuery
     {
         private readonly BookStoreDbContext _dbContext;
-
+        public int BookId; 
         public GetBookQuery(BookStoreDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public BookModelView Handle(int id)
+        public BookModelView Handle()
         {
-            var book = _dbContext.Books.Where(book=>book.Id == id).SingleOrDefault();
+            var book = _dbContext.Books.Where(book=>book.Id == BookId).SingleOrDefault();
             if(book is null)
                 throw new InvalidOperationException("Kitap Bulunamadi!");
 

@@ -8,15 +8,15 @@ namespace WebApi.BookOperations.UpdateBook
     {
         public UpdateBookModel Model{get;set;}
         private readonly BookStoreDbContext _dbContext;
-
+        public int BookId;
         public UpdateBookCommand(BookStoreDbContext context)
         {
             _dbContext = context;
         }
 
-        public void Handle(int id)
+        public void Handle()
         {
-            var book = _dbContext.Books.SingleOrDefault(x=>x.Id ==id);
+            var book = _dbContext.Books.SingleOrDefault(x=>x.Id ==BookId);
             if (book is null)
                 throw new InvalidOperationException("Kitap bulunamadi.");           
             book.GenreId = Model.GenreId != default ? Model.GenreId : book.GenreId;
